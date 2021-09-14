@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="exercise"
+            type="com.adammuniz.kaia.exercise.domain.model.ExerciseData" />
+
+        <variable
+            name="viewModel"
+            type="com.adammuniz.kaia.exercise.ui.ExercisesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{onClickListener}">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivExerciseImage"
+            android:layout_width="@dimen/list_image_width"
+            android:layout_height="@dimen/list_image_height"
+            android:contentDescription="@null"
+            app:imageFromUrl="@{exercise.coverImageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvExerciseName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvExerciseName"
+            android:layout_width="@dimen/list_text_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/list_text_margin"
+            android:layout_marginEnd="@dimen/list_text_margin"
+            android:text="@{exercise.name}"
+            app:layout_constraintBottom_toBottomOf="@id/ivExerciseImage"
+            app:layout_constraintEnd_toStartOf="@id/ibFavorite"
+            app:layout_constraintStart_toEndOf="@id/ivExerciseImage"
+            app:layout_constraintTop_toTopOf="@id/ivExerciseImage"
+            tools:text="Exercise Name" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibFavorite"
+            android:layout_width="@dimen/list_button_width"
+            android:layout_height="@dimen/list_button_height"
+            android:background="@{exercise.favorite ? @drawable/ic_star_on : @drawable/ic_star_off}"
+            android:onClick="@{() -> viewModel.toggleFavorite(exercise)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvExerciseName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_exercise"
+    app:startDestination="@id/exercise_list_fragment">
+
+    <fragment
+        android:id="@+id/exercise_list_fragment"
+        android:name="com.adammuniz.kaia.exercise.ui.exerciselist.ExerciseListFragment"
+        tools:layout="@layout/fragment_exercise_list">
+
+        <action
+            android:id="@+id/action_exercise_list_fragment_to_exercise_detail_fragment"
+            app:destination="@id/exercise_detail_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/exercise_detail_fragment"
+        android:name="com.adammuniz.kaia.exercise.ui.exercisedetail.ExerciseDetailFragment"
+        tools:layout="@layout/fragment_exercise_detail">
+
+        <argument
+            android:name="exerciseId"
+            app:argType="long" />
+
+    </fragment>
+
+</navigation>

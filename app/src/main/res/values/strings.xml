@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Kaia</string>
+
+    <string name="cancel_training">Cancel training</string>
+</resources>

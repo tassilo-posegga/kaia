@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Exercise List -->
+    <dimen name="list_margin_bottom">24dp</dimen>
+    <dimen name="list_margin_top">24dp</dimen>
+    <dimen name="list_margin_side">24dp</dimen>
+
+    <!-- Exercise List Item -->
+    <dimen name="list_button_height">48dp</dimen>
+    <dimen name="list_button_width">48dp</dimen>
+
+    <dimen name="list_image_height">96dp</dimen>
+    <dimen name="list_image_width">96dp</dimen>
+
+    <dimen name="list_text_margin">24dp</dimen>
+    <dimen name="list_text_width">0dp</dimen>
+
+    <!-- Exercise Detail -->
+    <dimen name="detail_image_height">0dp</dimen>
+    <dimen name="detail_image_width">0dp</dimen>
+
+    <!-- Button -->
+    <dimen name="button_margin">24dp</dimen>
+
+</resources>
