@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="exercise"
-            type="com.adammuniz.kaia.exercise.domain.model.ExerciseData" />
+            name="viewModel"
+            type="com.adammuniz.kaia.exercise.ui.exercisedetail.ExerciseDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             android:layout_width="@dimen/detail_image_width"
             android:layout_height="@dimen/detail_image_height"
             android:contentDescription="@null"
-            app:imageFromUrl="@{exercise.coverImageUrl}"
+            app:imageFromUrl="@{viewModel.exercise.coverImageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
             android:layout_height="@dimen/list_button_height"
             android:layout_marginEnd="@dimen/button_margin"
             android:layout_marginBottom="@dimen/button_margin"
-            android:background="@{exercise.favorite ? @drawable/ic_star_on : @drawable/ic_star_off}"
+            android:background="@{viewModel.exercise.favorite ? @drawable/ic_star_on : @drawable/ic_star_off}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

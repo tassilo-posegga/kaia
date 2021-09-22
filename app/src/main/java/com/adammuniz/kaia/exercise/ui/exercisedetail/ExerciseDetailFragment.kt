@@ -6,18 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.adammuniz.kaia.databinding.FragmentExerciseDetailBinding
-import com.adammuniz.kaia.exercise.ui.ExercisesViewModel
+import com.adammuniz.kaia.util.EventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ExerciseDetailFragment : Fragment() {
+class ExerciseDetailFragment : Fragment(), EventListener<ExerciseDetailEvent> {
 
-    private val viewModel: ExercisesViewModel by activityViewModels()
-    private val args: ExerciseDetailFragmentArgs by navArgs()
+    private val exerciseDetailViewModel: ExerciseDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +28,7 @@ class ExerciseDetailFragment : Fragment() {
         // Inflate
         val binding = FragmentExerciseDetailBinding.inflate(inflater, container, false)
             .apply {
-                exercise = viewModel.getExercise(args.exerciseId)
+                viewModel = exerciseDetailViewModel
                 lifecycleOwner = this@ExerciseDetailFragment
             }
 
@@ -38,24 +36,35 @@ class ExerciseDetailFragment : Fragment() {
 
         // Setup the Cancel button
         binding.bCancel.setOnClickListener {
-            it.findNavController().navigateUp()
+            onEvent(CancelClickedEvent)
         }
 
         // Setup the Favorite button
         binding.ibFavorite.setOnClickListener {
-            binding.exercise?.let { exercise ->
-                viewModel.toggleFavorite(exercise)
-            }
+            onEvent(FavoriteClickedEvent)
         }
 
         return binding.root
     }
 
     private fun subscribeUi(binding: FragmentExerciseDetailBinding) {
-        viewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            exercises.find { it.id == args.exerciseId }?.let {
-                binding.exercise = it
-            }
+//        exerciseDetailViewModel.observe(viewLifecycleOwner) { exercise ->
+//            binding.viewModel
+//        }
+    }
+
+    override fun onEvent(event: ExerciseDetailEvent) {
+        when (event) {
+            is CancelClickedEvent -> onCancelClickedEvent()
+            is FavoriteClickedEvent -> onFavoriteClickedEvent()
         }
+    }
+
+    private fun onCancelClickedEvent() {
+        findNavController().navigateUp()
+    }
+
+    private fun onFavoriteClickedEvent() {
+        exerciseDetailViewModel.toggleFavorite()
     }
 }

@@ -6,22 +6,13 @@
     <data>
 
         <variable
-            name="onClickListener"
-            type="android.view.View.OnClickListener" />
-
-        <variable
             name="exercise"
-            type="com.adammuniz.kaia.exercise.domain.model.ExerciseData" />
-
-        <variable
-            name="viewModel"
-            type="com.adammuniz.kaia.exercise.ui.ExercisesViewModel" />
+            type="com.adammuniz.kaia.exercise.domain.model.Exercise" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{onClickListener}">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivExerciseImage"
@@ -52,7 +43,6 @@
             android:layout_width="@dimen/list_button_width"
             android:layout_height="@dimen/list_button_height"
             android:background="@{exercise.favorite ? @drawable/ic_star_on : @drawable/ic_star_off}"
-            android:onClick="@{() -> viewModel.toggleFavorite(exercise)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvExerciseName"
