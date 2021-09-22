@@ -43,8 +43,9 @@ class ExerciseRepository @Inject constructor(
     }
 
     // Update
-    suspend fun update(exercise: Exercise) {
+    suspend fun update(exercise: Exercise): List<Exercise> {
         localDataSource.update(exercise)
+        return read()
     }
 
     suspend fun update(exercises: List<Exercise>) {

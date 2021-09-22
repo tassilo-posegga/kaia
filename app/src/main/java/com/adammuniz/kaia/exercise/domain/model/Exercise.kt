@@ -1,6 +1,5 @@
 package com.adammuniz.kaia.exercise.domain.model
 
-import androidx.databinding.ObservableBoolean
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,5 +10,5 @@ data class Exercise(
     val coverImageUrl: String,
     val name: String,
     val videoUrl: String,
-    val favorite: ObservableBoolean,
+    val favorite: Boolean,
 )

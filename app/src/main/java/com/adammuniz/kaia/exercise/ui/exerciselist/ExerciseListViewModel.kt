@@ -17,27 +17,26 @@ class ExerciseListViewModel @Inject constructor(
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel() {
 
-    private val _exercisesLiveData: MutableLiveData<List<Exercise>> = fetchExercises()
+    private val _exercisesLiveData = MutableLiveData<List<Exercise>>()
     val exercises: LiveData<List<Exercise>> = _exercisesLiveData
 
-    private fun fetchExercises(): MutableLiveData<List<Exercise>> {
-        val liveData = MutableLiveData<List<Exercise>>()
+    private val _navigateToDetail = MutableLiveData<Long>()
+    val navigateToDetail: LiveData<Long> = _navigateToDetail
 
+    init {
         viewModelScope.launch {
             val exercises = getExercisesUseCase.getExercises()
-            liveData.postValue(exercises)
+            _exercisesLiveData.postValue(exercises)
         }
-
-        return liveData
     }
 
     fun onExerciseClickedEvent(event: ExerciseClickedEvent) {
-        // No Op
+        _navigateToDetail.postValue(event.exercise.id)
     }
 
     fun onExerciseFavoriteClickedEvent(event: ExerciseFavoriteClickedEvent) {
         viewModelScope.launch {
-            toggleFavoriteUseCase.toggleFavorite(event.exercise)
+            _exercisesLiveData.postValue(toggleFavoriteUseCase.toggleFavorite(event.exercise))
         }
     }
 }

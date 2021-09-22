@@ -11,7 +11,7 @@ class ReverseLocalExerciseModelMapper : Mapper<Exercise, LocalExerciseModel> {
             coverImageUrl = input.coverImageUrl,
             name = input.name,
             videoUrl = input.videoUrl,
-            favorite = input.favorite.get()
+            favorite = input.favorite,
         )
     }
 }

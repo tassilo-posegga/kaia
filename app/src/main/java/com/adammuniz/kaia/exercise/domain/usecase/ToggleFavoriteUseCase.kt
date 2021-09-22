@@ -7,8 +7,7 @@ import javax.inject.Inject
 class ToggleFavoriteUseCase @Inject constructor(
     private val exerciseRepository: ExerciseRepository,
 ) {
-    suspend fun toggleFavorite(exercise: Exercise) {
-        exercise.favorite.set(!exercise.favorite.get())
-        exerciseRepository.update(exercise)
+    suspend fun toggleFavorite(exercise: Exercise): List<Exercise> {
+        return exerciseRepository.update(exercise.copy(favorite = !exercise.favorite))
     }
 }

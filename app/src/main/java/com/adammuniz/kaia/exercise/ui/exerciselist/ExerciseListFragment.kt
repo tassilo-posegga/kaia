@@ -17,6 +17,9 @@ class ExerciseListFragment : Fragment(), EventListener<ExerciseListEvent> {
 
     private val exerciseListViewModel: ExerciseListViewModel by viewModels()
 
+    private lateinit var binding: FragmentExerciseListBinding
+    private lateinit var adapter: ExerciseListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,25 +29,35 @@ class ExerciseListFragment : Fragment(), EventListener<ExerciseListEvent> {
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Inflate
-        val binding = FragmentExerciseListBinding.inflate(inflater, container, false)
+        binding = FragmentExerciseListBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = this@ExerciseListFragment
             }
 
-        // Setup the Adapter
-        val adapter = ExerciseListAdapter(this)
-        binding.rvExerciseList.adapter = adapter
-        subscribeUi(binding, adapter)
-
         return binding.root
     }
 
-    private fun subscribeUi(binding: FragmentExerciseListBinding, adapter: ExerciseListAdapter) {
-        binding.lifecycleOwner?.let {
-            exerciseListViewModel.exercises.observe(it) { exercises ->
-                adapter.submitList(exercises)
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Setup the Adapter
+        adapter = ExerciseListAdapter(this)
+        binding.rvExerciseList.adapter = adapter
+
+        exerciseListViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
+            adapter.submitList(exercises)
         }
+
+        exerciseListViewModel.navigateToDetail.observe(viewLifecycleOwner) {
+            navigateToDetail(it)
+        }
+    }
+
+    private fun navigateToDetail(exerciseId: Long) {
+        val direction = ExerciseListFragmentDirections
+            .actionExerciseListFragmentToExerciseDetailFragment(
+                exerciseId = exerciseId,
+            )
+
+        findNavController().navigate(direction)
     }
 
     override fun onEvent(event: ExerciseListEvent) {
@@ -56,13 +69,6 @@ class ExerciseListFragment : Fragment(), EventListener<ExerciseListEvent> {
 
     private fun onExerciseClickedEvent(event: ExerciseClickedEvent) {
         exerciseListViewModel.onExerciseClickedEvent(event)
-
-        val direction = ExerciseListFragmentDirections
-            .actionExerciseListFragmentToExerciseDetailFragment(
-                exerciseId = event.exercise.id,
-            )
-
-        findNavController().navigate(direction)
     }
 
     private fun onExerciseFavoriteClickedEvent(event: ExerciseFavoriteClickedEvent) {
